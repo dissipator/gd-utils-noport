@@ -142,8 +142,9 @@ function send_choice ({ fid, chat_id }) {
   })
 }
 
-// console.log(gen_bookmark_choices())
+console.log(gen_bookmark_choices())
 function gen_bookmark_choices (fid) {
+  console.log("gen_bookmark_choices: " + fid)
   const gen_choice = v => ({ text: `复制到 ${v.alias}`, callback_data: `copy ${fid} ${v.alias}` })
   const records = db.prepare('select * from bookmark').all()
   const result = []
@@ -352,4 +353,4 @@ function extract_from_text (text) {
   return m && extract_fid(m[0])
 }
 
-module.exports = { send_count, send_help, sm, extract_fid, reply_cb_query, send_choice, send_task_info, send_all_tasks, tg_copy, extract_from_text, get_target_by_alias, send_bm_help, send_all_bookmarks, set_bookmark, unset_bookmark, clear_tasks, send_task_help, rm_task }
+module.exports = { send_count, send_help, sm, extract_fid, reply_cb_query, send_choice, send_task_info, send_all_tasks, tg_copy, extract_from_text, get_target_by_alias, send_bm_help, gen_bookmark_choices, send_all_bookmarks, set_bookmark, unset_bookmark, clear_tasks, send_task_help, rm_task }

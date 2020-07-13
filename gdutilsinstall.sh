@@ -80,11 +80,11 @@ echo -e "\n$color_yellow===== <<升级系统/更新软件/安装工具/安装依
 #安装which和sudo
 if [[ "$(which which)" == "" ]]; then
     echo -e "$color_yellow“which”开始安装......$color_end"
-    #$cmd_install install which -y
+    $cmd_install install which -y
     echo -e "$color_yellow------------------------------------------------$color_end"
 elif [[ "$(which sudo)" == "" ]]; then
     echo -e "$color_yellow“sudo”开始安装......$color_end"
-    #$cmd_install install sudo -y
+    $cmd_install install sudo -y
     echo -e "$color_yellow------------------------------------------------$color_end"
 fi
 
@@ -92,20 +92,20 @@ fi
 for ((aloop = 0; aloop < ${#insofts[@]}; aloop++)); do
     if [ ${insofts[$aloop]} = "update" -o ${insofts[$aloop]} = "upgrade" ]; then
         echo -e "$color_yellow“${insofts[$aloop]}”开始安装......$color_end"
-        #$cmd_install ${insofts[$aloop]} -y
+        $cmd_install ${insofts[$aloop]} -y
         echo -e "$color_yellow------------------------------------------------$color_end"
     else
         echo -e "$color_yellow“${insofts[$aloop]}”开始安装......$color_end"
-        #$cmd_install install ${insofts[$aloop]} -y
+        $cmd_install install ${insofts[$aloop]} -y
         echo -e "$color_yellow------------------------------------------------$color_end"
     fi
 done
 
 echo -e "\n$color_yellow===== <<安装gdutils依赖-nodejs和npm/安装配置gdutils>> =====$color_end\n"
 
-#$cmd_install install $cmd_install_rely -y
-#curl -sL $nodejs_curl | bash -
-#$cmd_install install nodejs -y
+$cmd_install install $cmd_install_rely -y
+curl -sL $nodejs_curl | bash -
+$cmd_install install nodejs -y
 $cmd_install_rpm_build
 git clone https://github.com/dissipator/gd-utils-noport.git gd-utils && cd gd-utils
 pwd
@@ -123,40 +123,40 @@ echo -e "\n$color_yellow--------------------------------------------------------
 
 echo -e "\n$color_yellow  ===== <<开始部署gdutils查询转存TG机器人>> =====  $color_end\n"
 
-# #输入“机器人token/TG账号ID/域名/转存目的盘ID”
-# read -p """请输入机器人token并回车
-#     Your Bot Token =>:""" YOUR_BOT_TOKEN
-# #判断token是否输入正确
-# while [[ "${#YOUR_BOT_TOKEN}" != 46 ]]; do
-#     echo -e "$color_yellow★★★ 机器人TOKEN输入不正确，请重新输入或按“Ctrl+C”结束安装！ ★★★$color_end"
-#     read -p """请输入机器人token并回车
-#     Your Bot Token =>:""" YOUR_BOT_TOKEN
-# done
+#输入“机器人token/TG账号ID/域名/转存目的盘ID”
+read -p """请输入机器人token并回车
+    Your Bot Token =>:""" YOUR_BOT_TOKEN
+#判断token是否输入正确
+while [[ "${#YOUR_BOT_TOKEN}" != 46 ]]; do
+    echo -e "$color_yellow★★★ 机器人TOKEN输入不正确，请重新输入或按“Ctrl+C”结束安装！ ★★★$color_end"
+    read -p """请输入机器人token并回车
+    Your Bot Token =>:""" YOUR_BOT_TOKEN
+done
 
 
-# read -p """请输入使用机器人的telegram账号ID(获取ID机器人@userinfobot)并回车
-#     Your Telegram ID =>:""" YOUR_TELEGRAM_ID
-# #判断telegram ID是否正确(通过判断是不是纯数字)
-# until [[ $YOUR_TELEGRAM_ID =~ ^-?[0-9]+$ ]]; do
-#     echo -e "$color_yellow★★★ 您的TG账号ID输入不正确，请重新输入或按“Ctrl+C”结束安装！ ★★★$color_end"
-#     read -p """请输入使用机器人的telegram账号ID(获取ID机器人@userinfobot)并回车
-#     Your Telegram ID =>:""" YOUR_TELEGRAM_ID
-# done
+read -p """请输入使用机器人的telegram账号ID(获取ID机器人@userinfobot)并回车
+    Your Telegram ID =>:""" YOUR_TELEGRAM_ID
+#判断telegram ID是否正确(通过判断是不是纯数字)
+until [[ $YOUR_TELEGRAM_ID =~ ^-?[0-9]+$ ]]; do
+    echo -e "$color_yellow★★★ 您的TG账号ID输入不正确，请重新输入或按“Ctrl+C”结束安装！ ★★★$color_end"
+    read -p """请输入使用机器人的telegram账号ID(获取ID机器人@userinfobot)并回车
+    Your Telegram ID =>:""" YOUR_TELEGRAM_ID
+done
 
-# read -p """请输入转存默认目的地团队盘ID(不指定转存目的地默认改地址，脚本强制要求输入团队盘ID)并回车
-#     Your Google Team Drive ID =>:""" YOUR_GOOGLE_TEAM_DRIVE_ID
-# #判断google team drive ID是否正确（团队盘ID长度19位）
-# while [[ "${#YOUR_GOOGLE_TEAM_DRIVE_ID}" != 19 ]]; do
-#     echo -e "$color_yellow★★★ 您的Google team drive ID输入不正确，请重新输入或按“Ctrl+C”结束安装！ ★★★$color_end"
-#     read -p """请输入转存默认目的地ID(不指定转存目的地默认该地址，脚本强制要求输入团队盘ID)并回车
-#     Your Google Team Drive ID =>:""" YOUR_GOOGLE_TEAM_DRIVE_ID
-# done
+read -p """请输入转存默认目的地团队盘ID(不指定转存目的地默认改地址，脚本强制要求输入团队盘ID)并回车
+    Your Google Team Drive ID =>:""" YOUR_GOOGLE_TEAM_DRIVE_ID
+#判断google team drive ID是否正确（团队盘ID长度19位）
+while [[ "${#YOUR_GOOGLE_TEAM_DRIVE_ID}" != 19 ]]; do
+    echo -e "$color_yellow★★★ 您的Google team drive ID输入不正确，请重新输入或按“Ctrl+C”结束安装！ ★★★$color_end"
+    read -p """请输入转存默认目的地ID(不指定转存目的地默认该地址，脚本强制要求输入团队盘ID)并回车
+    Your Google Team Drive ID =>:""" YOUR_GOOGLE_TEAM_DRIVE_ID
+done
 
-# cd ~ &&
-#     sed -i "s/bot_token/$YOUR_BOT_TOKEN/g" ./gd-utils/config.js &&
-#     sed -i "s/your_tg_username/$YOUR_TELEGRAM_ID/g" ./gd-utils/config.js &&
-#     sed -i "s/DEFAULT_TARGET = ''/DEFAULT_TARGET = '$YOUR_GOOGLE_TEAM_DRIVE_ID'/g" ./gd-utils/config.js
-# echo -e "$color_yellow----------------------------------------------------------$color_end"
+cd ~ &&
+    sed -i "s/bot_token/$YOUR_BOT_TOKEN/g" ./gd-utils/config.js &&
+    sed -i "s/your_tg_username/$YOUR_TELEGRAM_ID/g" ./gd-utils/config.js &&
+    sed -i "s/DEFAULT_TARGET = ''/DEFAULT_TARGET = '$YOUR_GOOGLE_TEAM_DRIVE_ID'/g" ./gd-utils/config.js
+echo -e "$color_yellow----------------------------------------------------------$color_end"
 
 echo -e "$color_yellow“进程守护程序pm2”开始安装......$color_end"
 cd ~/gd-utils &&

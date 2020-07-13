@@ -12,21 +12,6 @@
 ## 感谢网友[@iwestlin](https://github.com/iwestlin)制作的gd-utils
 [gd-utils](https://github.com/iwestlin/gd-utils)
 
-## colab脚本（省去本地安装步骤，直接网页可用，感谢贡献者[@orange2008](https://github.com/orange2008)）
-[https://colab.research.google.com/drive/1i1W9nAzgiDtfA_rmTBcpMpwxVUhwgLsq](https://colab.research.google.com/drive/1i1W9nAzgiDtfA_rmTBcpMpwxVUhwgLsq)
-
-> 打开上面链接后，保存到自己的云端硬盘（请一定要保存，因为上面的共享链接操作记录所有人可见）
-然后在自己的个人盘账号下建立一个 accounts 文件夹，将自己的SA授权文件上传到里面，就可以开始使用了。
-
-colab使用录屏：[https://drive.google.com/drive/folders/19T37ARH7M1h67JGYanKp9LvORjJLEp_x](https://drive.google.com/drive/folders/19T37ARH7M1h67JGYanKp9LvORjJLEp_x)
-
-这里还有另一位网友[@iErics](https://github.com/iErics)制作的colab脚本，界面更加规整，功能也更完整些（比如可以选择是否继续任务等），使用方法大同小异：
-[https://colab.research.google.com/github/iErics/gd-utils/blob/master/Colab_gd_utils.ipynb](https://colab.research.google.com/github/iErics/gd-utils/blob/master/Colab_gd_utils.ipynb)
-
-## 一键安装脚本(感谢 脚本制作者 [@vitaminx](https://github.com/vitaminx))
-> 如果你没有Linux操作经验或者是新开的vps，可尝试使用此脚本
-
-请访问 [https://github.com/vitaminx/gd-utils](https://github.com/vitaminx/gd-utils) 获取安装方法
 
 ## 常见问题
 下面是一些网友的踩坑心得，如果你配置的时候也不小心掉进坑里，可以进去找找有没有解决办法：

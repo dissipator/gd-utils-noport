@@ -1,11 +1,16 @@
 # Google Drive 百宝箱
 
 > 不只是最快的 google drive 拷贝工具 [与其他工具的对比](./compare.md)
+> 本项目将TeleShellBot 和 gd-utils 做了整合（本人只做了整合，没有改变核心的代码逻辑）
+> 做到了去掉的http端口占用和nginx以及SSL的配置，也能使用telegram bot 功能
 
 ## [更新日志](./changelog.md)
 
 ## demo
 [https://drive.google.com/drive/folders/124pjM5LggSuwI1n40bcD5tQ13wS0M6wg](https://drive.google.com/drive/folders/124pjM5LggSuwI1n40bcD5tQ13wS0M6wg)
+
+## 感谢网友[@iwestlin](https://github.com/iwestlin)制作的gd-utils
+[gd-utils](https://github.com/iwestlin/gd-utils)
 
 ## colab脚本（省去本地安装步骤，直接网页可用，感谢贡献者[@orange2008](https://github.com/orange2008)）
 [https://colab.research.google.com/drive/1i1W9nAzgiDtfA_rmTBcpMpwxVUhwgLsq](https://colab.research.google.com/drive/1i1W9nAzgiDtfA_rmTBcpMpwxVUhwgLsq)
@@ -145,36 +150,6 @@ SA授权文件获取方法请参见 [https://gsuitems.com/index.php/archives/13/
 
 **如果你修改了代码中的配置，需要 `pm2 reload server` 才能生效**。
 
-> 如果你不想用nginx，可以将`server.js`中的`23333`改成`80`直接监听80端口（可能需要root权限）
-
-接下来可通过nginx或其他工具起一个web服务，示例nginx配置：
-```
-server {
-  listen 80;
-  server_name your.server.name;
-
-  location / {
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_pass http://127.0.0.1:23333/;
-  }
-}
-```
-配置好nginx后，可以再套一层cloudflare，具体教程请自行搜索。
-
-检查网站是否部署成功，可以命令行执行（请将YOUR_WEBSITE_URL替换成你的网址）
-```
-curl 'YOUR_WEBSITE_URL/api/gdurl/count?fid=124pjM5LggSuwI1n40bcD5tQ13wS0M6wg'
-```
-如果返回了`gd-utils 成功启动`的消息，说明部署成功了。
-
-最后，在命令行执行（请将[YOUR_WEBSITE]和[YOUR_BOT_TOKEN]分别替换成你自己的网址和bot token）
-```
-curl -F "url=[YOUR_WEBSITE]/api/gdurl/tgbot" 'https://api.telegram.org/bot[YOUR_BOT_TOKEN]/setWebhook'
-```
-这样，就将你的服务器连接上你的 telegram bot 了，试着给bot发送个 `/help`，如果它回复给你使用说明，那就配置成功了。
-
 ## 补充说明
 在`config.js`文件里，还有另外的几个参数：
 ```
@@ -194,33 +169,6 @@ const DEFAULT_TARGET = '' // 必填，拷贝默认目的地ID，如果不指定t
 ```
 读者可根据各自情况进行调整
 
-## 专家设置
-这一节面向更加注重安全的专家用户，并假设读者了解nodejs的基本语法
-
-在 `config.js` 中，你可以额外设置两个变量 `ROUTER_PASSKEY` 和 `TG_IPLIST` 来进一步保证接口安全。
-```javascript
-// 如果设置了这个值，那么调用 /api/gdurl/count 这个接口必须携带一个叫 passkey 的query，且必须等于ROUTER_PASSKEY的值
-// 如果不设置这个值，那么默认关闭 /api/gdurl/count 这个接口的功能（因为观察到很多用户公开的贴出了自己的API地址……）
-const ROUTER_PASSKEY = 'your-custom-passkey'
-
-// 与你的服务器通信的tg服务器的 ip 地址，可以在pm2 logs 中看到
-// 如果设置了这个值，那么调用 /api/gdurl/tgbot 这个接口的IP地址必须是 TG_IPLIST 数组的其中之一
-// 如果不设置这个值，则默认任何IP都可以调用此接口（考虑到后面还有个 tg username的白名单验证）
-const TG_IPLIST = ['tg-ip-address']
-
-module.exports = {
-  AUTH,
-  PARALLEL_LIMIT,
-  RETRY_LIMIT,
-  TIMEOUT_BASE,
-  TIMEOUT_MAX,
-  LOG_DELAY,
-  PAGE_SIZE,
-  DEFAULT_TARGET,
-  ROUTER_PASSKEY,
-  TG_IPLIST
-}
-```
 
 ## 注意事项
 程序的原理是调用了[google drive官方接口](https://developers.google.com/drive/api/v3/reference/files/list)，递归获取目标文件夹下所有文件及其子文件夹信息，粗略来讲，某个目录下包含多少个文件夹，就至少需要这么多次请求才能统计完成。

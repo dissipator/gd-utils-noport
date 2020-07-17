@@ -1,4 +1,4 @@
-name: gdbot2
+name: gd-utils-noport
 image: registry.cloud.okteto.net/dissipator/gdbot:14
 command:
 - bash

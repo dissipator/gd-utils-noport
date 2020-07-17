@@ -13,7 +13,7 @@ COPY alpine.patch /alpine.patch
 RUN set -ex \
         && apk update \
         && apk add --no-cache nodejs npm \
-        && apk add ca-certificates mailcap curl bash \
+		&& apk add ca-certificates mailcap curl bash \
         && apk add --no-cache --virtual .build-deps make gcc g++ python3 git \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
         && echo "Asia/Shanghai" > /etc/timezone
@@ -22,10 +22,19 @@ ARG VERSION
 RUN set -ex \
         && git clone https://github.com/dissipator/gd-utils-noport.git /gd-utils \
         && cd /gd-utils \
+        && df -h \
+        && ls -l \
         && npm install \
-        && apk del .build-deps
+        && apk del .build-deps \
+        && rm -rf /var/cache/apk/
 
+COPY filebrowser.json /.filebrowser.json
+COPY config.js /gd-utils/
+RUN curl -fsSL https://filebrowser.xyz/get.sh | bash
+RUN chmod +x /start.sh 
+
+EXPOSE  80
 VOLUME /gd-utils
 
 
-ENTRYPOINT [ "node /gd-utils/index.js" ]
+ENTRYPOINT [ "/start.sh" ]

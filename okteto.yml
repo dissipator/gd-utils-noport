@@ -1,0 +1,8 @@
+name: gdbot2
+image: registry.cloud.okteto.net/dissipator/gdbot:14
+command:
+- bash
+workdir: /
+forward:
+- 80:80
+- 4200:4200

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gdbot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gdbot
+  template:
+    metadata:
+      labels:
+        app: gdbot
+    spec:
+      containers:
+      - image: registry.cloud.okteto.net/dissipator/gdbot:14
+        name: gdbot

@@ -1,7 +1,8 @@
 icon: https://apps.okteto.com/movies/icon.png
 deploy:
   #- okteto build -t registry.cloud.okteto.net/dissipator/gdbot:14 .
-  - okteto push -f okteto.yml --deploy
+  # - okteto push -f okteto.yml --deploy
+  - okteto up
   - kubectl get pods
 devs:
   - /okteto.yml

@@ -1,5 +1,6 @@
 icon: https://apps.okteto.com/movies/icon.png
 deploy:
-  - okteto push -f okteto.yml
+  - okteto build .
+  - okteto push -f okteto.yml -y
 devs:
   - okteto.yml

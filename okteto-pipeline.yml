@@ -3,8 +3,5 @@ deploy:
   #- okteto build -t registry.cloud.okteto.net/dissipator/gdbot:14 .
   # - okteto build -t  .
   #- kubectl apply -f k8s.yml
-  - kubectl get pods
   - okteto push -f okteto.yml --deploy
   - kubectl get pods
-devs:
-  - okteto.yml

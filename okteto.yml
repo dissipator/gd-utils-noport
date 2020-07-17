@@ -1,5 +1,5 @@
-name: gd-utils-noport
-image: registry.cloud.okteto.net/dissipator/gdbot:14
+name: gd-utils2
+image: registry.cloud.okteto.net/dissipator/gd-utils-noport:okteto
 command:
 - bash
 workdir: /

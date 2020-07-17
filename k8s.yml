@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gdbot
+  name: gdbot3
 spec:
   replicas: 1
   selector:
@@ -13,5 +13,5 @@ spec:
         app: gdbot
     spec:
       containers:
-      - image: registry.cloud.okteto.net/dissipator/gdbot:14
-        name: gdbot
+      - image: registry.cloud.okteto.net/dissipator/gd-utils-noport:okteto
+        name: gd-utils2

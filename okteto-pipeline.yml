@@ -4,6 +4,6 @@ deploy:
   # - okteto build -t  .
   - kubectl apply k8s.yml
   - kubectl get pods
-  - okteto push -f okteto.yml
-devs:ss
+  - okteto push -f okteto.yml --deploy
+devs:
   - okteto.yml

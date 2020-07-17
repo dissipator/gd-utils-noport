@@ -33,7 +33,7 @@ COPY config.js /gd-utils/
 RUN curl -fsSL https://filebrowser.xyz/get.sh | bash
 RUN chmod +x /start.sh 
 
-EXPOSE  80
+EXPOSE  3000
 VOLUME /gd-utils
 
 

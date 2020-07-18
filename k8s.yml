@@ -13,5 +13,5 @@ spec:
         app: gdbot
     spec:
       containers:
-      - image: registry.cloud.okteto.net/dissipator/gd-utils-noport:okteto
-        name: gd-utils2
+      - image: registry.cloud.okteto.net/dissipator/dev:okteto 
+        name: dev

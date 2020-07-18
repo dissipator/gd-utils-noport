@@ -1,7 +1,7 @@
 name: gd-utils2
 image: registry.cloud.okteto.net/dissipator/gd-utils-noport:okteto
 command:
-- bash
+- /start.sh
 workdir: /
 forward:
 - 80:80

@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine AS base
 MAINTAINER Tdtool
 ARG VERSION=2020-07-16
 
@@ -38,3 +38,17 @@ VOLUME /gd-utils
 
 
 ENTRYPOINT [ "/start.sh" ]
+
+#################################
+
+FROM base AS dev
+
+COPY bashrc /root/.bashrc
+RUN npm install -g nodemon
+
+#################################
+
+FROM base AS prod
+
+EXPOSE 8080
+CMD node /gd-utils/index.js

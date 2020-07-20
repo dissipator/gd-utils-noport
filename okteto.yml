@@ -1,8 +1,8 @@
-name: gd-utils2
-image: registry.cloud.okteto.net/dissipator/gd-utils-noport:okteto
+name: gd-utils
+image: registry.cloud.okteto.net/dissipator/gdbot:14
 command:
 - /start.sh
 workdir: /
 forward:
-- 80:80
+- 3000:3000
 - 4200:4200

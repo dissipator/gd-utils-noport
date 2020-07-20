@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: S
+kind: Deployment
 metadata:
   name: gdbot
 spec:

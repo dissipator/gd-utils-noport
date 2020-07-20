@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: S
 metadata:
   name: gdbot
 spec:
@@ -14,4 +14,18 @@ spec:
     spec:
       containers:
       - image: registry.cloud.okteto.net/dissipator/gdbot:14
-        name: dev
+        name: gdbot
+        
+apiVersion: v1
+kind: Service
+metadata:
+  name: gdbot
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  ports:
+  - name: "gdbot"
+    port: 3000
+  selector:
+    app: gdbot

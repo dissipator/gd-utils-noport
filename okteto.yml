@@ -1,7 +1,7 @@
-name: gd-utils
+name: gdbot
 image: registry.cloud.okteto.net/dissipator/gdbot:14
 command:
-- /start.sh
+- bash
 workdir: /
 forward:
 - 3000:3000

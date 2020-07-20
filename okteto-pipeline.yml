@@ -6,4 +6,3 @@ deploy:
   - kubectl get pods
 devs:
   - /okteto.yml
-  - kubectl get pods

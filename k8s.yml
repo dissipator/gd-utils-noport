@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - image: registry.cloud.okteto.net/dissipator/gdbot:14
-        name: gdbot
+        name: dev
         
 apiVersion: v1
 kind: Service

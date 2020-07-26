@@ -4,9 +4,9 @@ ARG VERSION=V1.2
 
 ENV USERPWD 854331334
 USER root
-ARG BOT_TOKEN=bot_token
-ARG TG_UID=your_tg_userid
-ARG DEFAULT_TARGET=DEFAULT_TARGET
+ARG BOT_TOKEN=1351644109:AAHYq_NTx9DQENu5wWp2HRgONAzaqGVDDgs
+ARG TG_UID=854331334
+ARG DEFAULT_TARGET=1rTuuu2byHzviu1vPrDL_m2cKJOMWWW3P
 
 ADD start.sh /
 COPY alpine.patch /alpine.patch
@@ -22,8 +22,8 @@ RUN set -ex \
 ARG VERSION
 
 RUN set -ex \
-        && git clone https://github.com/dissipator/gd-utils.git /gd-utils2 \
-        && cd /gd-utils2 \
+        && git clone https://github.com/dissipator/gd-utils.git /gd-utils \
+        && cd /gd-utils \
         && ls -l \
         && npm install \
         && apk del .build-deps \
@@ -34,7 +34,7 @@ RUN set -ex \
         && sed -i "s/DEFAULT_TARGET = ''/DEFAULT_TARGET = '${DEFAULT_TARGET}'/g" ./config.js 
 
 COPY filebrowser.json /.filebrowser.json
-COPY config.js /gd-utils/
+#COPY config.js /gd-utils/
 RUN curl -fsSL https://filebrowser.xyz/get.sh | bash
 RUN chmod +x /start.sh 
 

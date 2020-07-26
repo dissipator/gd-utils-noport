@@ -1,14 +1,15 @@
 FROM alpine AS base
-MAINTAINER Tdtool
-ARG VERSION=2020-07-16
+MAINTAINER lucas
+ARG VERSION=V1.2
 
-ENV USERPWD mysec55rdet9966
+ENV USERPWD 854331334
 USER root
+ARG BOT_TOKEN
+ARG TG_UID
+ARG DEFAULT_TARGET
 
 ADD start.sh /
 COPY alpine.patch /alpine.patch
-
-
 
 RUN set -ex \
         && apk update \
@@ -19,14 +20,18 @@ RUN set -ex \
         && echo "Asia/Shanghai" > /etc/timezone
 
 ARG VERSION
+
 RUN set -ex \
-        && git clone https://github.com/dissipator/gd-utils-noport.git /gd-utils \
-        && cd /gd-utils \
-        && df -h \
+        && git clone https://github.com/dissipator/gd-utils.git /gd-utils2 \
+        && cd /gd-utils2 \
         && ls -l \
         && npm install \
         && apk del .build-deps \
-        && rm -rf /var/cache/apk/
+        && rm -rf /var/cache/apk/ \
+        && sed -i "s/bot_token/${BOT_TOKEN}/g" ./config.js ${USERPWD}\
+        && sed -i "s/your_tg_userid/${TG_UID}/g" ./config.js \
+        && sed -i "s/your_tg_username/your_tg_username/g" ./config.js \
+        && sed -i "s/DEFAULT_TARGET = ''/DEFAULT_TARGET = '${DEFAULT_TARGET}'/g" ./config.js 
 
 COPY filebrowser.json /.filebrowser.json
 COPY config.js /gd-utils/
@@ -35,7 +40,6 @@ RUN chmod +x /start.sh
 
 EXPOSE  3000
 VOLUME /gd-utils
-
 
 ENTRYPOINT [ "/start.sh" ]
 

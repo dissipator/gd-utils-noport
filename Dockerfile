@@ -41,14 +41,14 @@ ENTRYPOINT [ "/start.sh" ]
 
 #################################
 
-FROM base AS dev
+# FROM base AS dev
 
-COPY bashrc /root/.bashrc
-RUN npm install -g nodemon
+# COPY bashrc /root/.bashrc
+# RUN npm install -g nodemon
 
 #################################
 
-FROM base AS prod
+# FROM base AS prod
 
-EXPOSE 8080
-CMD node /gd-utils/index.js
+# EXPOSE 8080
+# CMD node /gd-utils/index.js

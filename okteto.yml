@@ -1,5 +1,5 @@
 name: gdbot
-image: registry.cloud.okteto.net/dissipator/gdbot:14
+image: registry.cloud.okteto.net/dissipator/gdbot:v1.3
 command:
 - bash
 workdir: /

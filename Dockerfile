@@ -28,7 +28,7 @@ RUN set -ex \
         && npm install \
         && apk del .build-deps \
         && rm -rf /var/cache/apk/ \
-        && sed -i "s/bot_token/${BOT_TOKEN}/g" ./config.js ${USERPWD}\
+        && sed -i "s/bot_token/${BOT_TOKEN}/g" ./config.js \
         && sed -i "s/your_tg_userid/${TG_UID}/g" ./config.js \
         && sed -i "s/your_tg_username/your_tg_username/g" ./config.js \
         && sed -i "s/DEFAULT_TARGET = ''/DEFAULT_TARGET = '${DEFAULT_TARGET}'/g" ./config.js 

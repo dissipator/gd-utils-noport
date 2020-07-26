@@ -13,7 +13,7 @@ spec:
         app: dev
     spec:
       containers:
-      - image: registry.cloud.okteto.net/dissipator/gdbot:14
+      - image: registry.cloud.okteto.net/dissipator/gdbot:v1.3
         name: dev
         
 apiVersion: v1

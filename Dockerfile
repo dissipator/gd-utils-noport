@@ -1,58 +1,66 @@
+# FROM registry.cloud.okteto.net/dissipator/gdbot:v1.0 AS base
+# FROM registry.cloud.okteto.net/dissipator/gdbot:v1.3 AS base
 FROM alpine AS base
 MAINTAINER lucas
 ARG VERSION=V1.2
 
+ENV DIR gd-utils
 ENV USERPWD 854331334
+ENV PATH=${PATH}:/node/bin
 USER root
-ARG BOT_TOKEN=1351644109:AAHYq_NTx9DQENu5wWp2HRgONAzaqGVDDgs
-ARG TG_UID=854331334
-ARG DEFAULT_TARGET=1rTuuu2byHzviu1vPrDL_m2cKJOMWWW3P
-
-ADD start.sh /
-COPY alpine.patch /alpine.patch
+ARG BOT_TOKEN=bot_token
+ARG TG_UID=your_tg_userid
+ARG DEFAULT_TARGET=DEFAULT_TARGET
 
 RUN set -ex \
+        && mkdir -p /var/cache/apk/ \
         && apk update \
-        && apk add --no-cache nodejs npm \
-		&& apk add ca-certificates mailcap curl bash \
-        && apk add --no-cache --virtual .build-deps make gcc g++ python3 git \
+        && apk add nodejs npm git\
+	&& apk add ca-certificates mailcap curl bash \
+        && apk add --no-cache --virtual .build-deps make gcc g++ python3 \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
         && echo "Asia/Shanghai" > /etc/timezone
 
 ARG VERSION
 
 RUN set -ex \
-        && git clone https://github.com/dissipator/gd-utils.git /gd-utils \
-        && cd /gd-utils \
-        && ls -l \
-        && npm install \
+        #&& wget https://cdn.npm.taobao.org/dist/node/v14.6.0/node-v14.6.0-linux-x64.tar.xz \
+        #&& tar xf node-v14.6.0-linux-x64.tar.xz && mv node-v14.6.0-linux-x64 /node && rm -rf node-v14.6.0-linux-x64.tar.xz \
+        # && cp /gd-utils/sa/shellinaboxd / && rm -rf gd-utils2 \
+        && git clone https://github.com/dissipator/gd-utils.git /${DIR} \
+        # && cp /shellinaboxd /gd-utils/sa/shellinaboxd \
+        # && chmod 777 /${DIR} \
+        && cd /${DIR} \
+        && rm -rf /${DIR}/sa/*.json \
+        && git pull \
+        && ls -l /${DIR} \
+        # && apk add git \
+        #&& npm install -g \
+        #&& npm install pm2 -g \
         && apk del .build-deps \
-        && rm -rf /var/cache/apk/ \
-        && sed -i "s/bot_token/${BOT_TOKEN}/g" ./config.js \
-        && sed -i "s/your_tg_userid/${TG_UID}/g" ./config.js \
-        && sed -i "s/your_tg_username/your_tg_username/g" ./config.js \
-        && sed -i "s/DEFAULT_TARGET = ''/DEFAULT_TARGET = '${DEFAULT_TARGET}'/g" ./config.js 
+        && pwd
+        #&& rm -rf /var/cache/apk/ 
 
+RUN apk add --no-cache --update --virtual build-deps alpine-sdk autoconf automake libtool curl tar git && \
+        adduser -D -H shusr && \
+        git clone https://github.com/shellinabox/shellinabox.git /shellinabox && \
+        cd /shellinabox && \
+        git apply /alpine.patch && \
+        autoreconf -i && \
+        ./configure --prefix=/shellinabox/bin && \
+        make && make install && cd / && \
+        mv /shellinabox/bin/bin/shellinaboxd /gd-utils/sa/shellinaboxd && \
+        rm -rf /shellinabox && \
+        apk del build-deps && rm -rf /var/cache/apk/
 COPY filebrowser.json /.filebrowser.json
-#COPY config.js /gd-utils/
 RUN curl -fsSL https://filebrowser.xyz/get.sh | bash
+RUN chmod +x /start.sh && \
+	chmod 777 /gd-utils/sa/shellinaboxd
+
+ADD start.sh /
 RUN chmod +x /start.sh 
 
 EXPOSE  3000
-VOLUME /gd-utils
+#VOLUME /gd-utils
 
 ENTRYPOINT [ "/start.sh" ]
-
-#################################
-
-# FROM base AS dev
-
-# COPY bashrc /root/.bashrc
-# RUN npm install -g nodemon
-
-#################################
-
-# FROM base AS prod
-
-# EXPOSE 8080
-# CMD node /gd-utils/index.js

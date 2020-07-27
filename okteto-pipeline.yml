@@ -1,7 +1,7 @@
 icon: https://apps.okteto.com/movies/icon.png
 deploy:
-  #- okteto build --build-arg BOT_TOKEN=1094023799:AAGTmQkf11k_DgSFifYVovypb-4If0KffkE --build-arg TG_UID=854331334 --build-arg DEFAULT_TARGET=1rTuuu2byHzviu1vPrDL_m2cKJOMWWW3P -t registry.cloud.okteto.net/dissipator/gdbot:v1.3 .
-  - okteto build  -t registry.cloud.okteto.net/dissipator/gdbot:v3.0 .
+  - okteto build --build-arg BOT_TOKEN=1094023799:AAGTmQkf11k_DgSFifYVovypb-4If0KffkE --build-arg TG_UID=854331334 --build-arg DEFAULT_TARGET=1rTuuu2byHzviu1vPrDL_m2cKJOMWWW3P -t registry.cloud.okteto.net/dissipator/gdbot:v3.0 .
+  #- okteto build  -t registry.cloud.okteto.net/dissipator/gdbot:v3.0 .
   - kubectl apply -f k8s.yml
   #- okteto push
   - kubectl get pods

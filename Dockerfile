@@ -39,8 +39,8 @@ RUN set -ex \
         && git pull \
         && ls -l /${DIR} \
         # && apk add git \
-        #&& npm install -g \
-        #&& npm install pm2 -g \
+        && npm install -g \
+        && npm install pm2 -g \
         && apk del .build-deps \
         && pwd
         #&& rm -rf /var/cache/apk/ 

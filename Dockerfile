@@ -12,6 +12,10 @@ ARG BOT_TOKEN=bot_token
 ARG TG_UID=your_tg_userid
 ARG DEFAULT_TARGET=DEFAULT_TARGET
 
+
+ADD start.sh /
+COPY alpine.patch /alpine.patch
+
 RUN set -ex \
         && mkdir -p /var/cache/apk/ \
         && apk update \

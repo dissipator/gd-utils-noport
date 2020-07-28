@@ -1,9 +1,13 @@
 # Google Drive 百宝箱
 
-> 不只是最快的 google drive 拷贝工具 [与其他工具的对比](./compare.md)
-> 本项目将TeleShellBot 和 gd-utils 做了整合（本人只做了整合，没有改变核心的代码逻辑）
-> 做到了去掉的http端口占用和nginx以及SSL的配置，也能使用telegram bot 功能
+ > 不只是最快的 google drive 拷贝工具 [与其他工具的对比](./compare.md)
 
+ > 本项目将TeleShellBot 和 gd-utils 做了整合（本人只做了整合，没有改变核心的代码逻辑）
+
+ > 做到了去掉的http端口占用和nginx以及SSL的配置，也能使用telegram bot 功能
+
+ > 为了尊重原作者，项目移入https://github.com/dissipator/gd-utils
+ 
 ## [更新日志](./changelog.md)
 
 ## demo

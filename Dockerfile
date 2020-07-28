@@ -12,7 +12,6 @@ ARG BOT_TOKEN=bot_token
 ARG TG_UID=your_tg_userid
 ARG DEFAULT_TARGET=DEFAULT_TARGET
 
-
 ADD start.sh /
 COPY alpine.patch /alpine.patch
 
@@ -56,13 +55,13 @@ RUN apk add --no-cache --update --virtual build-deps alpine-sdk autoconf automak
         mv /shellinabox/bin/bin/shellinaboxd /gd-utils/sa/shellinaboxd && \
         rm -rf /shellinabox && \
         apk del build-deps && rm -rf /var/cache/apk/
+
+COPY chconfig.sh /gd-utils/
 COPY filebrowser.json /.filebrowser.json
 RUN curl -fsSL https://filebrowser.xyz/get.sh | bash
-RUN chmod +x /start.sh && \
-	chmod 777 /gd-utils/sa/shellinaboxd
-
-ADD start.sh /
-RUN chmod +x /start.sh 
+RUN chmod +x /start.sh  \
+        && chmod +x /gd-utils/chconfig.sh  \
+	&& chmod 777 /gd-utils/sa/shellinaboxd
 
 EXPOSE  3000
 #VOLUME /gd-utils

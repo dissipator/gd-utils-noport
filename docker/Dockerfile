@@ -29,6 +29,7 @@ ARG VERSION
 
 RUN set -ex \
         && git clone  https://github.com/dissipator/gd-utils ${DIR}\
+	&& cd /${DIR} \
         && ls -l /${DIR} \
         && npm config set unsafe-perm=true \
         && npm install  \

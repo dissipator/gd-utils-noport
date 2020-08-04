@@ -1,0 +1,7 @@
+{
+  "aria2-server": "ws://127.0.0.1:6800/jsonrpc",
+  "aria2-key": "SECRETS",
+  "bot-key": "ARIA2_BOT",
+  "user-id": "854331334,884424842,1289547773",
+  "max-index": 10
+}

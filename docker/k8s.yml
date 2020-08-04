@@ -1,0 +1,48 @@
+apiVersion: apps/v1   # 1.9.0 之前的版本使用 apps/v1beta2，可通过命令 kubectl api-versions 查看
+kind: Deployment    #指定创建资源的角色/类型
+metadata:    #资源的元数据/属性
+  name: gdbotv3    #资源的名字，在同一个namespace中必须唯一
+spec:
+  replicas: 1    #副本数量2
+  selector:      #定义标签选择器
+    matchLabels:
+      app: gdbotv3
+  template:      #这里Pod的定义
+    metadata:
+      labels:    #Pod的label
+        app: gdbotv3
+    spec:        # 指定该资源的内容  
+      #hostNetwork: true
+      containers:  
+      - name: gdbotv3      #容器的名字  
+        image: registry.cloud.okteto.net/dissipator/gdbot:v3.0  #容器的镜像地址  
+        env:
+          - name: BOT_TOKEN
+            value: bot_token
+          - name: TG_UID
+            value: your_tg_userid
+          - name: DEFAULT_TARGET
+            value: DEFAULT_TARGET
+        ports:  
+          - containerPort: 3000  #容器对外的端口
+            # hostPort: 3000     #暴露端口
+
+
+---
+
+apiVersion: v1  
+kind: Service  # 指明资源类型是 service
+metadata:
+  name: gdbotv3  # service 的名字是 gdbot
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP #ClusterIP   NodePort
+  ports: # 将 service 3000 端口映射到 pod 的 80 端口，使用 TCP 协议
+  - name: "gdbotv3"
+    port: 3000  #service暴露在cluster ip上的端口，通过<cluster ip>:port访问服务,通过此端口集群内的服务可以相互访问
+    targetPort: 3000  #Pod的外部访问端口，port和nodePort的数据通过这个端口进入到Pod内部，Pod里面的containers的端口映射到这个端口，提供服务
+    # targetPort: 4200  #Pod的外部访问端口，port和nodePort的数据通过这个端口进入到Pod内部，Pod里面的containers的端口映射到这个端口，提供服务
+    # nodePort: 4200 #Node节点的端口，<nodeIP>:nodePort 是提供给集群外部客户访问service的入口
+  selector:
+    app: gdbotv3 # 指明哪些 label 的 pod 作为 service 的后端

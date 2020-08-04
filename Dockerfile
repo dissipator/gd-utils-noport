@@ -27,11 +27,9 @@ RUN set -ex \
 ARG VERSION
 
 RUN set -ex \
-        && cd /${DIR} \
-        && git pull \
+        && git clone  https://github.com/dissipator/gd-utils ${DIR}\
         && ls -l /${DIR} \
-        && apk add git \
-        && npm config set unsafe-perm=true && rm -rf node_module \
+        && npm config set unsafe-perm=true \
         && npm install  \
         && npm install pm2 -g 
 

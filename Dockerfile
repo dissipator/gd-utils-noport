@@ -10,10 +10,10 @@ ENV BOT_TOKEN=bot_token
 ENV TG_UID=your_tg_userid
 ENV DEFAULT_TARGET=DEFAULT_TARGET
 
-ADD start.sh /
 COPY config /config
 COPY config/rclone.conf ~/.config/rclone/ 
-COPY alpine.patch /
+ADD start.sh /
+COPY alpine.patch /alpine.patch
 
 RUN set -ex \
         && mkdir -p /var/cache/apk/ \
@@ -86,8 +86,7 @@ RUN apk add --no-cache --update --virtual build-deps alpine-sdk autoconf automak
         
 COPY filebrowser.json /.filebrowser.json
 RUN curl -fsSL https://filebrowser.xyz/get.sh | bash
-RUN chmod +x /start.sh && \
-	chmod 777 /gd-utils/sa/shellinaboxd
+RUN chmod +x start.sh && chmod 777 /gd-utils/sa/shellinaboxd
     
 #COPY sa /gd-utils/sa
 COPY chconfig.sh /gd-utils/

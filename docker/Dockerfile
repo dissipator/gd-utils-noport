@@ -13,7 +13,7 @@ ENV ARIA2_BOT=ARIA2_BOT
 
 COPY config /config
 COPY config/rclone.conf ~/.config/rclone/ 
-
+COPY alpine.patch /
 RUN set -ex \
         && mkdir -p /var/cache/apk/ \
         && apk update \

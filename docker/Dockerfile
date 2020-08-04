@@ -19,7 +19,7 @@ COPY alpine.patch /
 RUN set -ex \
         && mkdir -p /var/cache/apk/ \
         && apk update \
-        && apk add nodejs npm git python3\
+        && apk add nodejs npm git aria2 python3\
         && apk add ca-certificates mailcap curl bash \
         && apk add --no-cache --virtual .build-deps make gcc g++ \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
@@ -30,15 +30,10 @@ ARG VERSION
 RUN set -ex \
         && git clone  https://github.com/dissipator/gd-utils ${DIR}\
 	&& cd /${DIR} \
-        && ls -l /${DIR} \
+        && ls -l  \
         && npm config set unsafe-perm=true \
-        && npm install  \
-        && npm install pm2 -g 
-
-RUN set -ex \
-        && mkdir -p /var/cache/apk/ \
-        && apk add aria2 \
-        && npm install tele-aria2 -g
+        && npm install -g \
+        && npm install pm2 tele-aria2 -g 
 
 RUN set -ex \
     && wget https://downloads.rclone.org/v1.52.2/rclone-v1.52.2-linux-386.zip \
@@ -50,6 +45,18 @@ RUN set -ex \
     && rclone --version  \
     && rm -rf rclone-v1.52.2-linux-386.zip  rclone-v1.52.2-linux-386
     
+RUN apk add --no-cache --update --virtual build-deps alpine-sdk autoconf automake libtool curl tar git && \
+        adduser -D -H shusr && \
+        git clone https://github.com/shellinabox/shellinabox.git /shellinabox && \
+        cd /shellinabox && \
+        git apply /alpine.patch && \
+        autoreconf -i && \
+        ./configure --prefix=/shellinabox/bin && \
+        make && make install && cd / && \
+        mv /shellinabox/bin/bin/shellinaboxd /gd-utils/sa/shellinaboxd && \
+        rm -rf /shellinabox && \
+        apk del build-deps && rm -rf /var/cache/apk/
+	
 RUN set -ex \ 
     &&wget -qO- https://github.com/donwa/gclone/releases/download/v1.51.0-mod1.3.1/gclone_1.51.0-mod1.3.1_Linux_x86_64.gz | gzip -d -c > /usr/bin/gclone \
     &&chmod 0755 /usr/bin/gclone && ls -l /usr/bin/gclone\
@@ -64,17 +71,7 @@ RUN wget https://github.com/ytdl-org/youtube-dl/releases/download/2020.07.28/you
     && chmod +x /usr/bin/youtube-dl\
     && ln -s /usr/bin/python3 /usr/bin/python
 
-RUN apk add --no-cache --update --virtual build-deps alpine-sdk autoconf automake libtool curl tar git && \
-        adduser -D -H shusr && \
-        git clone https://github.com/shellinabox/shellinabox.git /shellinabox && \
-        cd /shellinabox && \
-        git apply /alpine.patch && \
-        autoreconf -i && \
-        ./configure --prefix=/shellinabox/bin && \
-        make && make install && cd / && \
-        mv /shellinabox/bin/bin/shellinaboxd /gd-utils/sa/shellinaboxd && \
-        rm -rf /shellinabox && \
-        apk del build-deps && rm -rf /var/cache/apk/
+
         
 COPY filebrowser.json /.filebrowser.json
 RUN curl -fsSL https://filebrowser.xyz/get.sh | bash

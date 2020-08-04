@@ -11,9 +11,11 @@ ENV TG_UID=your_tg_userid
 ENV SECRETS=SECRETS
 ENV ARIA2_BOT=ARIA2_BOT
 
+ADD start.sh /
 COPY config /config
 COPY config/rclone.conf ~/.config/rclone/ 
 COPY alpine.patch /
+
 RUN set -ex \
         && mkdir -p /var/cache/apk/ \
         && apk update \

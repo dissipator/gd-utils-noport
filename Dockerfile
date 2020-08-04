@@ -1,5 +1,3 @@
-# FROM registry.cloud.okteto.net/dissipator/gdbot:v3.0 AS base
-# FROM registry.cloud.okteto.net/dissipator/gdbot:v1.3 AS base
 FROM alpine AS base
 MAINTAINER lucas
 ARG VERSION=V2.0
@@ -70,17 +68,3 @@ EXPOSE  3000
 VOLUME /gd-utils
 
 ENTRYPOINT [ "/start.sh" ]
-
-################################
-
-#FROM base AS dev
-
-#COPY bashrc /root/.bashrc
-#RUN npm install -g nodemon
-
-################################
-
-#FROM base AS prod
-
-#EXPOSE 8080
-#CMD node /gd-utils/index.js

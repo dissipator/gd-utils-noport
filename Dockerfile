@@ -10,6 +10,7 @@ ENV BOT_TOKEN=bot_token
 ENV TG_UID=your_tg_userid
 ENV DEFAULT_TARGET=DEFAULT_TARGET
 
+ADD start.sh /
 COPY config /config
 COPY config/rclone.conf ~/.config/rclone/ 
 COPY alpine.patch /
@@ -27,6 +28,7 @@ ARG VERSION
 
 RUN set -ex \
         && git clone  https://github.com/dissipator/gd-utils ${DIR}\
+	&& cd /${DIR}  \
         && ls -l /${DIR} \
         && npm config set unsafe-perm=true \
         && npm install  \

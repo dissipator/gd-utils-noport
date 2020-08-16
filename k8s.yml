@@ -15,7 +15,7 @@ spec:
       #hostNetwork: true
       containers:  
       - name: gdbotv3      #容器的名字  
-        image: registry.cloud.okteto.net/dissipator/gdbot:v3.0  #容器的镜像地址  
+        image: registry.cloud.okteto.net/dissipator/gdbot:v2.0  #容器的镜像地址  
         env:
           - name: BOT_TOKEN
             value: bot_token
@@ -41,7 +41,7 @@ spec:
   ports: # 将 service 3000 端口映射到 pod 的 80 端口，使用 TCP 协议
   - name: "gdbotv3"
     port: 3000  #service暴露在cluster ip上的端口，通过<cluster ip>:port访问服务,通过此端口集群内的服务可以相互访问
-    targetPort: 3000  #Pod的外部访问端口，port和nodePort的数据通过这个端口进入到Pod内部，Pod里面的containers的端口映射到这个端口，提供服务
+    targetPort: 4200  #Pod的外部访问端口，port和nodePort的数据通过这个端口进入到Pod内部，Pod里面的containers的端口映射到这个端口，提供服务
     # targetPort: 4200  #Pod的外部访问端口，port和nodePort的数据通过这个端口进入到Pod内部，Pod里面的containers的端口映射到这个端口，提供服务
     # nodePort: 4200 #Node节点的端口，<nodeIP>:nodePort 是提供给集群外部客户访问service的入口
   selector:

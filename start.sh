@@ -9,10 +9,7 @@ chmod 4755 /bin/busybox
 chmod +x chconfig.sh
 bash chconfig.sh
 pm2 start index.js &
-#node index.js &
 cd /
 filebrowser  &
 #免登陆:/gd-utils/sa/shellinaboxd --no-beep -t  --service "/:root:root:/:/bin/bash" &
 /gd-utils/sa/shellinaboxd --no-beep -t --user root -s "/:LOGIN" 
-#filebrowser默认不启动
-# filebrowser   &

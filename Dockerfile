@@ -60,8 +60,9 @@ RUN set -ex \
     && touch /aria2.session
 
 RUN wget https://github.com/ytdl-org/youtube-dl/releases/download/2020.07.28/youtube-dl -O /usr/bin/youtube-dl \
-    && chmod +x /usr/bin/youtube-dl\
-    && ln -s /usr/bin/python3 /usr/bin/python
+    && chmod +x /usr/bin/youtube-dl \
+    && mkdir -p /root/bin \
+    && ln -s /usr/bin/python3 /root/bin/python
 
 RUN set -ex \ 
     && mkdir -p /Downloads \

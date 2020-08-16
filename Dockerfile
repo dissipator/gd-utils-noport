@@ -31,7 +31,7 @@ RUN set -ex \
 	&& cd /${DIR}  \
         && ls -l /${DIR} \
         && npm config set unsafe-perm=true \
-        && npm install  \
+        && npm install  -g \
         && npm install pm2 -g 
 
 RUN set -ex \
@@ -64,7 +64,7 @@ RUN wget https://github.com/ytdl-org/youtube-dl/releases/download/2020.07.28/you
     && ln -s /usr/bin/python3 /usr/bin/python
 
 RUN set -ex \ 
-    && mkdir /Downloads \
+    && mkdir -p /Downloads \
     && mkdir -p /root/.config/rclone/  \
     && touch /aria2.session
 
@@ -91,7 +91,7 @@ RUN chmod +x start.sh && chmod 777 /gd-utils/sa/shellinaboxd
 #COPY sa /gd-utils/sa
 COPY chconfig.sh /gd-utils/
 
-EXPOSE  3000
+EXPOSE  3000 4200
 VOLUME /gd-utils
 
 ENTRYPOINT [ "/start.sh" ]

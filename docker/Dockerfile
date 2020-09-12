@@ -6,10 +6,10 @@ ENV DIR gd-utils
 ENV USERPWD 123456789
 ENV PATH=${PATH}
 USER root
-ENV BOT_TOKEN=bot_token
-ENV TG_UID=your_tg_userid
-ENV SECRETS=SECRETS
-ENV ARIA2_BOT=ARIA2_BOT
+ENV BOT_TOKEN=${bot_token}
+ENV TG_UID=${your_tg_userid}
+ENV SECRETS=${SECRETS}
+ENV ARIA2_BOT=${ARIA2_BOT}
 
 ADD start.sh /
 COPY config /config
